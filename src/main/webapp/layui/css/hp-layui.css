@@ -1,0 +1,236 @@
+.layui-tab-title {
+	background-color: #f2f2f2;
+}
+
+.layui-tab-title .layui-this {
+	background-color: #fff;
+}
+
+.demo-carousel {
+	height: 500px;
+	padding-top: 250px;
+	text-align: center;
+}
+
+.zn-iframe {
+	border-color: rgba(0, 0, 0, 0);
+}
+
+.hp-right-tab-menu table tr td {
+	height: 30px;
+	line-height: 30px;
+	padding: 0 6px;
+	border-radius: 2px;
+	cursor: pointer;
+}
+
+.hp-right-tab-menu table tr td:hover {
+	color: black;
+	background: white;
+}
+.layui-circle-img{
+	width: 50px;
+    height: 50px;
+    margin-right: 12px;
+    border-radius: 50%; 
+/*    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 50%; */
+}
+
+
+.hp-nav-none .layui-nav-bar{
+    background-color: rgba(0,0,0,0);
+}
+
+/*涓婚*/
+/* 鐐叿钃�  閰嶈壊*/
+/* 澶撮儴*/
+.hp-blue-theme .layui-header{
+	background: #1E9FFF;
+}
+.hp-blue-theme .layui-header .layui-logo{
+	color: white;
+}
+.hp-blue-theme .layui-header .layui-nav .layui-nav-item .layui-nav-child{
+	background: #1E9FFF;
+}
+.hp-blue-theme .layui-header .layui-nav .layui-nav-child a:hover{
+	    background-color: #4E5465;
+}
+.hp-blue-theme .layui-header .layui-nav .layui-nav-item a{
+	color: white;
+}
+.hp-blue-theme .layui-header  .layui-nav-bar{
+	background-color:white;
+}
+/* 宸︿晶鑿滃崟*/
+.hp-blue-theme .hp-left-menu{
+	background-color: #1E9FFF;
+}
+
+.hp-blue-theme .hp-left-menu .layui-nav {
+	background-color: #1E9FFF;
+}
+
+.hp-blue-theme .hp-left-menu .layui-nav-tree .layui-nav-bar {
+	background-color: white;
+}
+.hp-blue-theme .hp-left-menu  .layui-nav-tree .layui-nav-item a {
+	color: #fff; 
+}
+
+.hp-blue-theme .hp-left-menu .layui-nav-tree  .layui-this>a {
+	background-color: #01aaed;
+}
+.hp-blue-theme .hp-left-menu .layui-nav-tree .layui-nav-child .hp-tab-add:hover{
+	/*background-color: #01aaed;*/
+	color: rgba(255,255,255,.7);
+}
+.hp-blue-theme .hp-left-menu .layui-nav-tree  .layui-this>a:hover {
+	background-color: #01aaed;
+}
+.hp-blue-theme .hp-left-menu .layui-nav-child dd.layui-this {
+	background-color: #01aaed;
+}
+.hp-blue-theme .hp-nav-none  .layui-nav-item  .hp-user-name{
+	color: #fff;
+}
+
+/*涓婚*/
+/* 鍘熻皡缁� 閰嶈壊*/
+/* 澶撮儴*/
+.hp-green-theme  .layui-header{
+	background: #5FB878;
+}
+.hp-green-theme  .layui-header .layui-logo{
+	color: white;
+}
+.hp-green-theme  .layui-header .layui-nav .layui-nav-item .layui-nav-child{
+	background: #5FB878;
+}
+.hp-green-theme  .layui-header .layui-nav .layui-nav-child a:hover{
+	    background-color: #4E5465;
+}
+.hp-green-theme  .layui-header .layui-nav .layui-nav-item a{
+	color: white;
+}
+.hp-green-theme  .layui-header  .layui-nav-bar{
+	background-color:white;
+}
+/* 宸︿晶鑿滃崟*/
+.hp-green-theme  .hp-left-menu{
+	background-color: #5FB878;
+}
+
+.hp-green-theme  .hp-left-menu .layui-nav {
+	background-color: #5FB878;
+}
+
+.hp-green-theme  .hp-left-menu .layui-nav-tree .layui-nav-bar {
+	background-color: white;
+}
+.hp-green-theme  .hp-left-menu  .layui-nav-tree .layui-nav-item a {
+	color: #fff; 
+}
+	/* 閫変腑棰滆壊*/
+.hp-green-theme  .hp-left-menu .layui-nav-tree  .layui-this>a {
+	background-color: #3eb377;
+}
+.hp-green-theme  .hp-left-menu .layui-nav-tree .layui-nav-child .hp-tab-add:hover{
+	/*background-color: #01aaed;*/
+	color: rgba(255,255,255,.7);
+}
+.hp-green-theme  .hp-left-menu .layui-nav-tree  .layui-this>a:hover {
+	background-color: #3eb377;
+}
+.hp-green-theme  .hp-left-menu .layui-nav-child dd.layui-this {
+	background-color: #3eb377;
+}
+.hp-green-theme  .hp-nav-none  .layui-nav-item  .hp-user-name{
+	color: #fff;
+}
+
+
+
+/*涓婚*/
+/*浣庤皟榛�  閰嶈壊*/
+/* 澶撮儴*/
+.hp-black-theme .layui-side-scroll{
+	background: #393D49;
+}
+
+.jan-green-theme{
+	background: #90EE90;
+}
+
+.jan-yellow-theme{
+	background: #FFD133;
+}
+
+.jan-red-theme{
+	background: #FF6347;
+}
+
+
+
+/*涓婚*/
+/* 娓呯函鐧� 閰嶈壊*/
+/* 澶撮儴*/
+.hp-white-theme  .layui-header{
+	background: #FFFFFF;
+}
+.hp-white-theme  .layui-header .layui-logo{
+	color: white;
+}
+.hp-white-theme  .layui-header .layui-nav .layui-nav-item .layui-nav-child{
+	background: #FFFFFF;
+}
+.hp-white-theme  .layui-header .layui-nav .layui-nav-child a:hover{
+	    background-color: #FFFFFF;
+}
+.hp-white-theme  .layui-header .layui-nav .layui-nav-item a{
+	color: white;
+}
+.hp-white-theme  .layui-header  .layui-nav-bar{
+	background-color:white;
+}
+/* 宸︿晶鑿滃崟*/
+.hp-white-theme  .hp-left-menu{
+	background-color: #FFFFFF;
+}
+
+.hp-white-theme  .hp-left-menu .layui-nav {
+	background-color: #FFFFFF;
+}
+
+.hp-white-theme  .hp-left-menu .layui-nav-tree .layui-nav-bar {
+	background-color: white;
+}
+.hp-white-theme  .hp-left-menu  .layui-nav-tree .layui-nav-item a {
+	color: #fff; 
+}
+	/* 閫変腑棰滆壊*/
+.hp-white-theme  .hp-left-menu .layui-nav-tree  .layui-this>a {
+	background-color: #FFFFFF;
+}
+.hp-whiten-theme  .hp-left-menu .layui-nav-tree .layui-nav-child .hp-tab-add:hover{
+	/*background-color: #01aaed;*/
+	color: rgba(255,255,255,.7);
+}
+.hp-white-theme  .hp-left-menu .layui-nav-tree  .layui-this>a:hover {
+	background-color: #FFFFFF;
+}
+.hp-white-theme  .hp-left-menu .layui-nav-child dd.layui-this {
+	background-color: #FFFFFF;
+}
+.hp-white-theme  .hp-nav-none  .layui-nav-item  .hp-user-name{
+	color: #fff;
+}
+
+.input-text:focus{  
+    border-style:solid;
+    border-color: #03a9f4;
+    box-shadow: 0 0 5px #03a9f4;
+}

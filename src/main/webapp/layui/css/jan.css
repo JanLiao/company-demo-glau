@@ -1,0 +1,225 @@
+.jan-input:focus{
+-webkit-transition:border linear .2s,-webkit-box-shadow linear .5s; 
+border-color:rgba(141,39,142,.75); 
+-webkit-box-shadow:0 0 18px rgba(0, 138, 225); 
+}
+.jan-head{
+	position: absolute;
+	left:10%;
+	/* top:4%; */
+	width:80%;
+	height:4%;
+	font-size:25px;
+	font-weight:bold;
+}
+.jan-id{
+	position: absolute;
+	left:10%;
+	top:4%;
+	width:80%;
+	height:4%;
+	font-size:20px;
+	font-weight:bold;
+}
+.jan-size{
+	font-size:18px;
+}
+.jan-pic1{
+	position: absolute;
+	left:10%;
+	top:8%;
+	width:40%;
+	height:20%;
+}
+.jan-pic1 img{
+    max-width:45%;
+    max-height:45%;
+}
+.jan-pic2{
+	position: absolute;
+	left:50%;
+	top:8%;
+	width:40%;
+	height:20%;
+}
+.jan-pic2 img{
+    max-width:45%;
+    max-height:45%;
+}
+.jan-hr{
+	position: absolute;
+	left:10%;
+	top:30%;
+	width:80%;
+}
+.jan-qulity{
+	position: absolute;
+	left:10%;
+	top:33%;
+	width:80%;
+	height:4%;
+	font-size:20px;
+	font-weight:bold;
+}
+.jan-left-qulity{
+	position: absolute;
+	left:10%;
+	top:38%;
+	width:40%;
+	height:4%;
+	font-size:16px;
+}
+.jan-right-qulity{
+	position: absolute;
+	left:50%;
+	top:38%;
+	width:40%;
+	height:4%;
+	font-size:16px;
+}
+.jan-hr1{
+	position: absolute;
+	left:10%;
+	top:41%;
+	width:80%;
+}
+.jan-percent{
+	position: absolute;
+	left:10%;
+	top:44%;
+	width:80%;
+	font-size:20px;
+	font-weight:bold;
+}
+.jan-glaucoma-left{
+	position: absolute;
+	left:10%;
+	top:49%;
+	width:40%;
+	height:4%;
+	font-size:16px;
+}
+.jan-glaucoma-right{
+	position: absolute;
+	left:50%;
+	top:49%;
+	width:40%;
+	height:4%;
+	font-size:16px;
+}
+.jan-amd-left{
+	position: absolute;
+	left:10%;
+	top:54%;
+	width:40%;
+	height:4%;
+	font-size:16px;
+}
+.jan-amd-right{
+	position: absolute;
+	left:50%;
+	top:54%;
+	width:40%;
+	height:4%;
+	font-size:16px;
+}
+.jan-dr-left{
+	position: absolute;
+	left:10%;
+	top:59%;
+	width:40%;
+	height:4%;
+	font-size:16px;
+}
+.jan-dr-right{
+	position: absolute;
+	left:50%;
+	top:59%;
+	width:40%;
+	height:4%;
+	font-size:16px;
+}
+.jan-pm-left{
+	position: absolute;
+	left:10%;
+	top:64%;
+	width:40%;
+	height:4%;
+	font-size:16px;
+}
+.jan-pm-right{
+	position: absolute;
+	left:50%;
+	top:64%;
+	width:40%;
+	height:4%;
+	font-size:16px;
+}
+.jan-hr2{
+	position: absolute;
+	left:10%;
+	top:67%;
+	width:80%;
+}
+.jan-analysis{
+	position: absolute;
+	left:10%;
+	top:70%;
+	width:80%;
+	font-size:20px;
+	font-weight:bold;
+}
+.jan-result-left{
+	position: absolute;
+	left:10%;
+	top:75%;
+	width:40%;
+	height:20%;
+}
+.jan-result-right{
+	position: absolute;
+	left:50%;
+	top:75%;
+	width:40%;
+	height:20%;
+}
+.jan-result-left img{
+	max-width:45%;
+    max-height:45%;
+}
+.jan-result-right img{
+	max-width:45%;
+    max-height:45%;
+}
+.layui-progress-text{
+	font-size:3%; 
+	line-height:1%;
+}
+.jan-cdr-left{
+	position: absolute;
+	left:10%;
+	top:92%;
+	width:40%;
+	font-size:16px;
+}
+.jan-cdr-right{
+	position: absolute;
+	left:50%;
+	top:92%;
+	width:40%;
+	font-size:16px;
+}
+.jan-odoc-left{
+	position: absolute;
+	left:10%;
+	top:96%;
+	width:40%;
+	font-size:16px;
+}
+.jan-odoc-right{
+	position: absolute;
+	left:50%;
+	top:96%;
+	width:40%;
+	font-size:16px;
+}

@@ -1,0 +1,51 @@
+.jan-card-risk{
+	position: absolute;
+	top: 4%;
+	left: 5%;
+	width: 90%;
+	height:6%;
+	font-weight:bold;
+	/* font-size:200%; */
+}
+.jan-card-if{
+	position:absolute;
+	top:4%;
+	left:15%;
+	width:12%;
+	height:6%;
+	/* font-size:130%; */
+	text-align: right;
+	color:#33ABA0;
+	display: inline-block;
+	vertical-align: middle;
+}
+.jan-card-btn{
+	position:absolute;
+	top:4%;
+	left:30%;
+	height:6%;
+	display: inline-block;
+	vertical-align: middle;
+}
+.jan-card-container{
+	margin-top: 7%;
+	margin-left: 5%;
+	width: 90%;
+	/* height:80px; */
+	box-shadow : 0 4px 8px 0 rgba( 0, 0, 0, 0.2), 0 6px 20px 0 rgba( 0, 0, 0, 0.19);
+	text-align: center;
+	/* margin:0 auto; */
+}
+.jan-card-card {
+	position:absolution;
+	top: 10%;
+	left: 3%;
+	width: 80%;
+	height: 90%;
+}
+.jan-btn-green{
+	background-color:#47A447;
+}
+.jan-card-size{
+	color:#428BCA;
+}

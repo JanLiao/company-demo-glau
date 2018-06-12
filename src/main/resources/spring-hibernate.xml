@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"  
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"  
+    xmlns:aop="http://www.springframework.org/schema/aop"  
+    xsi:schemaLocation="  
+        http://www.springframework.org/schema/beans   
+        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd   
+        http://www.springframework.org/schema/tx   
+        http://www.springframework.org/schema/tx/spring-tx-4.3.xsd  
+        http://www.springframework.org/schema/aop   
+        http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+  
+    <!-- 配置数据源 c3p0 -->  
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">  
+        <property name="driverClass" value="${jdbc.driver}" />  
+        <property name="jdbcUrl" value="${jdbc.url}" />  
+        <property name="user" value="${jdbc.username}" />  
+        <property name="password" value="${jdbc.password}" />  
+        
+        <!-- 请求超时时间 当连接池连接耗尽时，客户端调用getConnection()后等待获取新连接的时间，超时后将抛出SQLException，如设为0则无限期等待。单位毫秒。默认: 0-->  
+        <property name="checkoutTimeout" value="30000" />  
+        <!-- 每60秒检查所有连接池中的空闲连接。默认值: 0，不检查 -->  
+        <property name="idleConnectionTestPeriod" value="60" />  
+        <!-- 连接数据库连接池最大空闲时间 -->  
+        <property name="maxIdleTime" value="60" />  
+        <!-- 连接池初始化连接数 -->  
+        <property name="initialPoolSize" value="5" />  
+        <property name="minPoolSize" value="5" />  
+        <property name="maxPoolSize" value="20" />  
+        <!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。默认值: 3 -->  
+        <property name="acquireIncrement" value="5" />  
+      
+        <!--定义在从数据库获取新连接失败后重复尝试的次数。默认值: 30 ；小于等于0表示无限次-->   
+        <property name="acquireRetryAttempts" value="0"/>  
+        <!--重新尝试的时间间隔，默认为：1000毫秒-->   
+        <property name="acquireRetryDelay" value="1000" />  
+        <!--关闭连接时，是否提交未提交的事务，默认为false，即关闭连接，回滚未提交的事务 -->   
+        <property name="autoCommitOnClose" value="false" />
+    </bean>  
+  
+    <!-- 配置hibernate的SessionFactory -->  
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">  
+        <!-- 注入数据源 相关信息看源码 -->  
+        <property name="dataSource" ref="dataSource" />  
+        <!-- hibernate配置信息 -->  
+        <property name="hibernateProperties">  
+            <props>  
+                <prop key="hibernate.dialect">${hibernate.dialect}</prop>  
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>  
+                <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>  
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>  
+                              
+            </props>  
+        </property>  
+        <!-- 扫描hibernate注解配置的entity -->  
+        <property name="packagesToScan" value="com.cvte.entity" />  
+        
+    </bean>  
+  
+    <!-- 配置事务管理器 -->  
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">  
+        <property name="sessionFactory" ref="sessionFactory" />  
+    </bean>  
+    
+    <!-- 注解事务 -->  
+    <tx:annotation-driven transaction-manager="transactionManager" />  
+  
+<!--     spring 配置事务增强处理Bean，指定事务管理器  
+    <tx:advice id="transactionAdvice" transaction-manager="transactionManager">  
+        配置详细事务处理语义  
+        <tx:attributes>  
+            <tx:method name="insert*" propagation="REQUIRED" />  
+            <tx:method name="update*" propagation="REQUIRED" />  
+            <tx:method name="delete*" propagation="REQUIRED" />  
+ 
+            <tx:method name="get*" propagation="SUPPORTS" read-only="true" />  
+            <tx:method name="find*" propagation="SUPPORTS" read-only="true" />  
+            <tx:method name="select*" propagation="SUPPORTS" read-only="true" />  
+            <tx:method name="load*" propagation="SUPPORTS" read-only="true" />  
+  
+            其他采用默认事务方式  
+            <tx:method name="*" />  
+  
+        </tx:attributes>  
+    </tx:advice>   -->
+  
+    <!-- Spring aop事务管理
+		  例如定义切入点表达式  execution (* com.sample.service.impl..*.*(..))  
+		 execution()是最常用的切点函数，其语法如下所示： 整个表达式可以分为五个部分：
+		 1、execution(): 表达式主体。
+		 2、第一个*号：表示返回类型，*号表示所有的类型。
+		 3、包名：表示需要拦截的包名，后面的两个句点表示当前包和当前包的所有子包，com.sample.service.impl包、子孙包下所有类的方法。
+		 4、第二个*号：表示类名，*号表示所有的类。
+		 5、*(..):最后这个星号表示方法名，*号表示所有的方法，后面括弧里面表示方法的参数，两个句点表示任何参数。 --> 
+<!--     <aop:config>  
+        <aop:pointcut id="transactionPointcut"  expression="execution(* com.cvte.service.impl..*Impl.*(..))" />  
+       
+        <aop:advisor pointcut-ref="transactionPointcut" advice-ref="transactionAdvice" />  
+    </aop:config>   -->
+ 
+</beans>
