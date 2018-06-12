@@ -1,7 +1,7 @@
 package com.cvte.netty;
 
-import java.io.IOException;
-import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import javax.servlet.ServletContextEvent;
@@ -9,7 +9,6 @@ import javax.servlet.ServletContextListener;
 
 import org.apache.log4j.Logger;
 
-import com.cvte.cons.Constant;
 //import com.cvte.cons.Constant;
 //import com.cvte.test.ShellCDRTest;
 //import com.cvte.test.ShellPercentTest;
@@ -39,8 +38,6 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
-import io.netty.handler.logging.LogLevel;
-import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.IdleStateHandler;
 
 
@@ -48,147 +45,105 @@ public class NettyServer implements ServletContextListener {  //用于tomcat启�
 
 	
 	private Thread myThread;
-//	private Thread watchThread;
-//	private Thread queueThread;
 	private Thread qulityThread;  //开启qulity  tcp服务
 	private Thread cdrThread;      //开启cdr tcp服务
 	private Thread percentThread; //开启 筛查tcp服务
-	
-//	private Thread qulityClient;  //启动客户端tcp连接
-//	private Thread cdrClient;
-//	private Thread percentClient;
-//	private Thread clientThread;
-//	
 	private Thread imgThread;  //AI处理结果
+	private ExecutorService executor;
 	
+	/**
+	 * @param arg0
+	 */
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
-		myThread = new Thread(new Runnable() {    //使用另一个线程来执行该方法，会避免占用Tomcat的启动时间 
+		executor = Executors.newFixedThreadPool(10);
+		executor.submit(new Runnable() {
 
 			@Override
 			public void run() {
-				System.out.println("netty start!!!==!!!");
 				startNettyServer();    //启动netty服务器
 			}
 			
 		});
 		
-		myThread.start();
+		executor.submit(new Runnable() {
+			
+			@Override
+			public void run() {
+				new TCPServerCDR().startServer();
+			}
+			
+		});
 		
-//		//检索文件夹
-//		watchThread = new Thread(new Runnable() {
-//			
-//			public void run() {
-//				//ImgProcess.process();
-//				//ImgProcessTest.process();
-//			}
-//		});
-//		
-//		watchThread.start();
-//		
-//		//队列线程
-//		queueThread = new Thread(new Runnable() {
+		executor.submit(new Runnable() {  //启动percent tcp服务
+
+			@Override
+			public void run() {
+				new TCPServerPercent().startServer();
+			}
+			
+		});
+		
+		executor.submit(new Runnable() {  //quality tcp启动
+
+			@Override
+			public void run() {
+				TCPServer tcp = new TCPServer();
+				tcp.startServer();
+			}
+			
+		});
+		
+				
+//		myThread = new Thread(new Runnable() {    //使用另一个线程来执行该方法，会避免占用Tomcat的启动时间 
 //
 //			@Override
 //			public void run() {
-//				//ProcessImg.process();
+//				System.out.println("netty start!!!==!!!");
+//				startNettyServer();    //启动netty服务器
 //			}
 //			
 //		});
 //		
-//		queueThread.start();
-		
-		
-		//cdr
-		cdrThread = new Thread(new Runnable() {
-			public void run() {
-				new TCPServerCDR().startServer();
-				//new TCPCDRTest().startServer();
-			}
-		});
-		cdrThread.start();
-		
-		
-		//疾病筛查
-		percentThread = new Thread(new Runnable() {
-			public void run() {
-				new TCPServerPercent().startServer();
-				//new TCPPercentTest().startServer();
-			}
-		});
-		percentThread.start();
-		
-		try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
-		//质量评估
-		qulityThread = new Thread(new Runnable() {
-			public void run() {
-				new TCPServer().startServer();
-				//new TCPQulityTest().startServer();
-			}
-		});
-		qulityThread.start();
-		
+//		myThread.start();
+//		
+//		
+//		//cdr
+//		cdrThread = new Thread(new Runnable() {
+//			public void run() {
+//				new TCPServerCDR().startServer();
+//				//new TCPCDRTest().startServer();
+//			}
+//		});
+//		cdrThread.start();
+//		
+//		
+//		//疾病筛查
+//		percentThread = new Thread(new Runnable() {
+//			public void run() {
+//				new TCPServerPercent().startServer();
+//				//new TCPPercentTest().startServer();
+//			}
+//		});
+//		percentThread.start();
+//		
 //		try {
-//			Thread.sleep(6000);
+//			Thread.sleep(1000);
 //		} catch (InterruptedException e) {
 //			e.printStackTrace();
 //		}
+//		
+//		//质量评估
+//		qulityThread = new Thread(new Runnable() {
+//			public void run() {
+//				new TCPServer().startServer();
+//				//new TCPQulityTest().startServer();
+//			}
+//		});
+//		qulityThread.start();
 		
 		Logger logger = Logger.getLogger(NettyServer.class);
 		logger.info("start connection tcp");
-		//服务器启动tcp客户端连接
-//		clientThread = new Thread(new Runnable() {
-//					public void run() {
-//						StartClient.startClient();
-//					}
-//				});
-//		clientThread.start();
-		
-//		//服务器启动tcp客户端连接
-//		qulityClient = new Thread(new Runnable() {
-//			public void run() {
-//				//ShellQulity.getUtlByName();
-//				//ShellQulityTest.getUtlByName();
-//			}
-//		});
-//		qulityClient.start();
-//		Logger logger = Logger.getLogger(NettyServer.class);
-//		logger.info("qulity thread");
-//		
-//		//服务器启动tcp客户端连接
-//				cdrClient = new Thread(new Runnable() {
-//					public void run() {
-//						//ShellCDR.getUtlByName();
-//						//ShellCDRTest.getUtlByName();
-//						logger.info("cdr start");
-//					}
-//				});
-//				cdrClient.start();
-//				logger.info("cdr thread");
-//				
-//				//服务器启动tcp客户端连接
-//				percentClient = new Thread(new Runnable() {
-//					public void run() {
-//						//ShellPercent.getUtlByName();
-//						//ShellPercentTest.getUtlByName();
-//						logger.info("percent start");
-//					}
-//				});
-//				percentClient.start();
-//				logger.info("percent thread");
-				
-				//AI处理
-				imgThread = new Thread(new Runnable() {
-					public void run() {
-						//ProcessImage.process();
-					}
-				});
-				imgThread.start();
 		
 	}
 	
