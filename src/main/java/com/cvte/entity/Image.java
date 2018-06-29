@@ -31,6 +31,8 @@ public class Image implements java.io.Serializable {
 	
 	private String imgPath;
 	
+	private int isHand;
+	
 	private Date receiveTime;
 
 	@Id
@@ -90,6 +92,15 @@ public class Image implements java.io.Serializable {
 		this.receiveTime = receiveTime;
 	}
 
+	@Column(name = "is_hand")
+	public int getIsHand() {
+		return isHand;
+	}
+
+	public void setIsHand(int isHand) {
+		this.isHand = isHand;
+	}
+
 	public Image() {
 		super();
 	}	
@@ -109,6 +120,18 @@ public class Image implements java.io.Serializable {
 		this.imgName = imgName;
 		this.tid = tid;
 		this.imgPath = imgPath;
+		this.receiveTime = receiveTime;
+	}
+	
+	
+
+	public Image(String imgName, String tid, String uid, String imgPath, int isHand, Date receiveTime) {
+		super();
+		this.imgName = imgName;
+		this.tid = tid;
+		this.uid = uid;
+		this.imgPath = imgPath;
+		this.isHand = isHand;
 		this.receiveTime = receiveTime;
 	}
 

@@ -15,6 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.cvte.cons.Constant;
 import com.cvte.dao.impl.ImageDao;
+import com.cvte.dao.impl.TerminalDao;
+import com.cvte.entity.Terminal;
+import com.cvte.handheld.HandlerUtil;
 import com.cvte.netty.msg.BaseMsg;
 import com.cvte.netty.msg.DataKey;
 import com.cvte.netty.msg.LoggerInfo;
@@ -36,6 +39,7 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<BaseMsg> {
 	
 	//private ChannelHandlerContext ctx = null;
 	private ImageDao imgDao = (ImageDao) SpringContextHelper.getBean("imgDao");
+	private TerminalDao terminalDao = (TerminalDao)SpringContextHelper.getBean("terminalDao");
 	
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, BaseMsg msg) throws Exception {
@@ -48,14 +52,14 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<BaseMsg> {
 				InetSocketAddress insocket = (InetSocketAddress) ctx.channel()
 						.remoteAddress();
 				String clientIP = insocket.getAddress().getHostAddress();
-				logger.info(clientIP + "  =  " + form.format(new java.util.Date()) + "=server println Heartbeat");
+				//logger.info(clientIP + "  =  " + form.format(new java.util.Date()) + "=server println Heartbeat");
 				break;
 				
 			case PDFRec: //收到PC端已接收到PDF文件  传输日志保存信息
 				PDFRecMsg pdfMsg = (PDFRecMsg) msg;
 				String[] pdfname = pdfMsg.getPdfname().split(",");
 				
-				Date day=new Date();    
+				Date day=new Date();
 				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				
 
@@ -84,7 +88,8 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<BaseMsg> {
 				ValidateMsg validateMsg = (ValidateMsg) msg;
 				String account = validateMsg.getAccount();
 				String psw = validateMsg.getPassword();
-				if ( "123456".equals(psw)) {
+				Terminal terminal = terminalDao.queryByAccount(account, psw);
+				if (terminal != null) {
 					System.out.println("连接验证成功!!!!!");
 					logger.info("验证成功");
 					NettyChannelMap.add(account, (SocketChannel)ctx.channel());
@@ -93,7 +98,7 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<BaseMsg> {
 					ctx.writeAndFlush(resultMsg);	
 				} else {
 					ctx.writeAndFlush(new ResultMsg(MsgType.Validate, "未经允许客户端连接失败, 请检查账号和密码是否正确"));					
-					}
+				}
 				break;
 			
 			case ImgTransfer:
@@ -112,12 +117,17 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<BaseMsg> {
 				logger.info("图片保存成功");
 				
 				//图片信息保存到数据库
-				String imgId = imgDao.saveImage(transferMsg.getFileName(), path);
-				//处理接收到的图片
-				logger.info("图片imgId=" + imgId);
-				ProcessImage.processNew(ctx, transferMsg.getFileName(), path, imgId);
+				String[] str = num[1].split("_");
+				if(str.length == 1) {
+					HandlerUtil.processHandheld(ctx, transferMsg.getFileName(), path);
+				}
+				else {
+					String imgId = imgDao.saveImage(transferMsg.getFileName(), path);
+					//处理接收到的图片
+					logger.info("图片imgId=" + imgId);
+					ProcessImage.processNew(ctx, transferMsg.getFileName(), path, imgId);
+				}
 				break;
-				
 				
 			default:
 				break;

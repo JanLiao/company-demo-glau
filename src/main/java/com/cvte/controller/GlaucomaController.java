@@ -343,6 +343,7 @@ public class GlaucomaController {
 	public List<EyeInfo> eyeInfo(String pid){
 		logger.info("获取eyeinfo详细");
 		List<EyeInfo> list = patientService.queryByPid(pid);
+		System.out.println(list.get(0));
 		return list;
 	}
 	

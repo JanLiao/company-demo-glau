@@ -94,54 +94,6 @@ public class NettyServer implements ServletContextListener {  //用于tomcat启�
 			
 		});
 		
-				
-//		myThread = new Thread(new Runnable() {    //使用另一个线程来执行该方法，会避免占用Tomcat的启动时间 
-//
-//			@Override
-//			public void run() {
-//				System.out.println("netty start!!!==!!!");
-//				startNettyServer();    //启动netty服务器
-//			}
-//			
-//		});
-//		
-//		myThread.start();
-//		
-//		
-//		//cdr
-//		cdrThread = new Thread(new Runnable() {
-//			public void run() {
-//				new TCPServerCDR().startServer();
-//				//new TCPCDRTest().startServer();
-//			}
-//		});
-//		cdrThread.start();
-//		
-//		
-//		//疾病筛查
-//		percentThread = new Thread(new Runnable() {
-//			public void run() {
-//				new TCPServerPercent().startServer();
-//				//new TCPPercentTest().startServer();
-//			}
-//		});
-//		percentThread.start();
-//		
-//		try {
-//			Thread.sleep(1000);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
-//		
-//		//质量评估
-//		qulityThread = new Thread(new Runnable() {
-//			public void run() {
-//				new TCPServer().startServer();
-//				//new TCPQulityTest().startServer();
-//			}
-//		});
-//		qulityThread.start();
-		
 		Logger logger = Logger.getLogger(NettyServer.class);
 		logger.info("start connection tcp");
 		
@@ -193,28 +145,13 @@ public class NettyServer implements ServletContextListener {  //用于tomcat启�
 	public void contextDestroyed(ServletContextEvent arg0) {   //关闭时回收资源
 		Logger logger = Logger.getLogger(NettyServer.class);
 		
-		// TODO Auto-generated method stub
 		try {
-			myThread.interrupt();
-			cdrThread.interrupt();
-			qulityThread.interrupt();
-			percentThread.interrupt();
+			executor.shutdown();
+			executor.awaitTermination(30, TimeUnit.SECONDS);
 			logger.info("all tcp server thread is interrupt====");
-			imgThread.interrupt();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		
-//		for(Socket socket : Constant.SocketList) {
-//			if(socket!=null){
-//	            try{  
-//	                socket.close();  
-//	                logger.info(socket + "==closed");
-//	            }catch(IOException e) {
-//	                e.printStackTrace();   
-//	            }
-//	        }
-//		}
 	}
 
 }

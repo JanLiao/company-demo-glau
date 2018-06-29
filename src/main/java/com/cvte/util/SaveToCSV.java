@@ -247,7 +247,8 @@ public class SaveToCSV {
 	    }  
 	}
 	
-	public static void report(ImgInfo img, String pcnum, String datepath, ChannelHandlerContext ctx, String imgId) {
+	public static void report(ImgInfo img, String pcnum, String datepath, 
+			ChannelHandlerContext ctx, String imgId) {
 		Logger logger = Logger.getLogger(SaveToCSV.class);
 		Person person = new Person();
 		person.setUid(img.getUid());

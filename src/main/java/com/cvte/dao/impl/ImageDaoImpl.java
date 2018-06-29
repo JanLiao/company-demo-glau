@@ -56,16 +56,29 @@ public class ImageDaoImpl implements ImageDao {
 		logger.info("保存mysql");
 		String[] num = fileName.split(",");
 		String imgPath = "img/" + num[0] + "/" + path + "/" + num[1];
-		//SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		Image img = new Image(num[1], num[0], num[1].split("_")[1], imgPath, new Timestamp(new Date().getTime()));
-		logger.info("current session=" + openSession());
-		logger.info("save img=" + img);
-		Session session =openSession();
-		session.save(img);
-		closeSession(session);
-		logger.info("save success!!!");
-		logger.info("save after img=" + img);
-		return img.getImgId();
+		String[] str = num[1].split("_");
+		if(str.length == 1) {  //手持机     num[1] - uid  未确定
+			Image img = new Image(num[1], num[0], num[1], imgPath, 1, new Timestamp(new Date().getTime()));
+			logger.info("current session=" + openSession());
+			logger.info("save img=" + img);
+			Session session =openSession();
+			session.save(img);
+			closeSession(session);
+			logger.info("save success!!!");
+			logger.info("save after img=" + img);
+			return img.getImgId();
+		}else {  //SY机
+			//SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			Image img = new Image(num[1], num[0], num[1].split("_")[1], imgPath, 0, new Timestamp(new Date().getTime()));
+			logger.info("current session=" + openSession());
+			logger.info("save img=" + img);
+			Session session =openSession();
+			session.save(img);
+			closeSession(session);
+			logger.info("save success!!!");
+			logger.info("save after img=" + img);
+			return img.getImgId();
+		}
 	}
 
 	@Override

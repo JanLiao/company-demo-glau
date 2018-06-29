@@ -11,7 +11,7 @@
   
     <!-- 自动扫描@Controller注入为bean -->
 	<context:component-scan base-package="com.cvte.controller" />
-
+ 
 	<!-- 将StringHttpMessageConverter的默认编码设为UTF-8 -->
 	<bean class="org.springframework.http.converter.StringHttpMessageConverter">
 		<constructor-arg value="UTF-8" />

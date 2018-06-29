@@ -51,8 +51,10 @@ public class ProcessImage {
 				EyeInfo info = getData(filename);
 				logger.info("info to imginfo" + info);
 				String[] str = filename.split("_");
-				ImgInfo img = new ImgInfo(str[1], str[0], str[5], info.getE_url(), info.getE_result1(), info.getFullconf(), 
-						info.getCupconf(), info.getCdr(), info.getE_result2(), "" + info.getQulity(), info.getPercent2(), info.getPercent3(),
+				ImgInfo img = new ImgInfo(str[1], str[0], str[5], info.getE_url(), 
+						info.getE_result1(), info.getFullconf(), 
+						info.getCupconf(), info.getCdr(), info.getE_result2(), 
+						"" + info.getQulity(), info.getPercent2(), info.getPercent3(),
 						info.getPercent1(), info.getPercent4());
 				
 				logger.info("img=" + img);
@@ -194,9 +196,11 @@ public class ProcessImage {
 		if(!f1.exists()) {
 			f1.mkdirs();
 		}
-		File destFile = new File(Constant.ImgResultPath + "/" + pcnum + "/" + datepath + "/" + str1[str1.length - 1]);
+		File destFile = new File(Constant.ImgResultPath + "/" + pcnum + "/" + 
+		datepath + "/" + str1[str1.length - 1]);
 		File srcFile1 = new File(url2);
-		File destFile1 = new File(Constant.ImgResultPath + "/" + pcnum + "/" + datepath + "/" + str2[str2.length - 1]);
+		File destFile1 = new File(Constant.ImgResultPath + "/" + pcnum + "/" + 
+		datepath + "/" + str2[str2.length - 1]);
 		try {
 			FileUtils.copyFile(srcFile, destFile);
 		} catch (IOException e1) {
@@ -415,8 +419,10 @@ public class ProcessImage {
 		EyeInfo info = getData(fileName, datepath);
 		logger.info("info to imginfo" + info);
 		String[] str = num[1].split("_");
-		ImgInfo img = new ImgInfo(str[1], str[0], str[5], info.getE_url(), info.getE_result1(), info.getFullconf(), 
-				info.getCupconf(), info.getCdr(), info.getE_result2(), "" + info.getQulity(), info.getPercent2(), info.getPercent3(),
+		ImgInfo img = new ImgInfo(str[1], str[0], str[5], info.getE_url(), 
+				info.getE_result1(), info.getFullconf(), 
+				info.getCupconf(), info.getCdr(), info.getE_result2(), 
+				"" + info.getQulity(), info.getPercent2(), info.getPercent3(),
 				info.getPercent1(), info.getPercent4());
 		
 		logger.info("img=" + img);
@@ -425,8 +431,9 @@ public class ProcessImage {
 		//生成report
 		//SaveToCSV.report(img, num[0], datepath, ctx);  //已被替换
 	}
-
-	public static void processNew(ChannelHandlerContext ctx, String fileName, String datepath, String imgId) {
+	
+	public static void processNew(ChannelHandlerContext ctx, String fileName, 
+			String datepath, String imgId) {
 		Logger logger = Logger.getLogger(ProcessImage.class);
 		String[] num = fileName.split(",");
 		
@@ -435,8 +442,10 @@ public class ProcessImage {
 		EyeInfo info = getData(fileName, datepath);
 		logger.info("info to imginfo" + info);
 		String[] str = num[1].split("_");
-		ImgInfo img = new ImgInfo(str[1], num[0], str[5], info.getE_url(), info.getE_result1(), info.getFullconf(), 
-				info.getCupconf(), info.getCdr(), info.getE_result2(), "" + info.getQulity(), info.getPercent2(), info.getPercent3(),
+		ImgInfo img = new ImgInfo(str[1], num[0], str[5], info.getE_url(), 
+				info.getE_result1(), info.getFullconf(), 
+				info.getCupconf(), info.getCdr(), info.getE_result2(), 
+				"" + info.getQulity(), info.getPercent2(), info.getPercent3(),
 				info.getPercent1(), info.getPercent4());
 		
 		

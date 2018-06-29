@@ -2,6 +2,7 @@ package com.cvte.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -15,8 +16,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cvte.dao.impl.TerminalDao;
 import com.cvte.entity.Resource;
 import com.cvte.entity.Role;
+import com.cvte.entity.Terminal;
 import com.cvte.entity.User;
 import com.cvte.msg.Result;
 import com.cvte.service.impl.LoginService;
@@ -31,12 +34,42 @@ public class LoginController {
 	@Autowired
 	private LoginService loginService;
 	
+//	@Autowired
+//	private TerminalDao terminalDao;
+	
 	@RequestMapping("index")
 	public String index() {
 		return "index";
 	}
 	
-	@RequestMapping("loginIn")
+//	@RequestMapping(value="terminalVal")
+//	public void terminalValidate(String account, String password, 
+//			HttpServletResponse response) {
+//		String msg = "";
+//		if("".equals(account) || "".equals(password)) {
+//			msg = "0,账号或密码不能为空";
+//		}
+//		else {
+//			Terminal terminal = terminalDao.queryByAccount(account, password);
+//			if(terminal != null) {
+//				msg = "1,验证成功";
+//			}
+//			else {
+//				msg = "0,账号不存在或密码错误";
+//			}
+//		}
+//		
+//		// 清空response
+//        response.reset();
+//        response.setContentType("application/octet-stream");
+//        try {
+//			response.setHeader("Content-Disposition", "attachment;msg=" + new String(msg.getBytes("UTF-8"),"ISO-8859-1"));
+//		} catch (UnsupportedEncodingException e) {
+//			e.printStackTrace();
+//		}
+//	}
+	
+	@RequestMapping(value="loginIn")
 	@ResponseBody
 	public Result<String> loginIn(String account, String password, HttpSession session){
 		System.out.println(account + "=" + password);
