@@ -41,4 +41,8 @@ public interface ImageDao {
 
 	QulityDto getQulityDto(int qulity, String sex);
 
+	String getUidByImageId(String imgid);
+
+	String queryByTidName(String tid, String imgName);
+
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.cvte.entity.Resource;
 import com.cvte.entity.Role;
+import com.cvte.entity.Terminal;
 import com.cvte.entity.User;
 
 /** 
@@ -19,5 +20,7 @@ public interface LoginDao {
 	Role queryByRid(int rid);
 
 	void saveVisit(User user);
+
+	Terminal queryByAccountPassword(String account, String password);
 
 }

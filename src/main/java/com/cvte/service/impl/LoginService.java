@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.cvte.entity.Resource;
 import com.cvte.entity.Role;
+import com.cvte.entity.Terminal;
 import com.cvte.entity.User;
 
 /** 
@@ -20,5 +21,7 @@ public interface LoginService {
 	Role queryById(int i);
 
 	void saveVisit(User user);
+
+	Terminal queryByAccountPassword(String account, String password);
 
 }

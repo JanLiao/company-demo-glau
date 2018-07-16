@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.cvte.dao.impl.LoginDao;
 import com.cvte.entity.Resource;
 import com.cvte.entity.Role;
+import com.cvte.entity.Terminal;
 import com.cvte.entity.User;
 
 /** 
@@ -60,6 +61,11 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public void saveVisit(User user) {
 		loginDao.saveVisit(user);
+	}
+
+	@Override
+	public Terminal queryByAccountPassword(String account, String password) {
+		return loginDao.queryByAccountPassword(account, password);
 	}
 
 }

@@ -34,40 +34,39 @@ public class LoginController {
 	@Autowired
 	private LoginService loginService;
 	
-//	@Autowired
-//	private TerminalDao terminalDao;
-	
 	@RequestMapping("index")
 	public String index() {
 		return "index";
 	}
 	
-//	@RequestMapping(value="terminalVal")
-//	public void terminalValidate(String account, String password, 
-//			HttpServletResponse response) {
-//		String msg = "";
-//		if("".equals(account) || "".equals(password)) {
-//			msg = "0,账号或密码不能为空";
-//		}
-//		else {
-//			Terminal terminal = terminalDao.queryByAccount(account, password);
-//			if(terminal != null) {
-//				msg = "1,验证成功";
-//			}
-//			else {
-//				msg = "0,账号不存在或密码错误";
-//			}
-//		}
-//		
-//		// 清空response
-//        response.reset();
-//        response.setContentType("application/octet-stream");
-//        try {
-//			response.setHeader("Content-Disposition", "attachment;msg=" + new String(msg.getBytes("UTF-8"),"ISO-8859-1"));
-//		} catch (UnsupportedEncodingException e) {
-//			e.printStackTrace();
-//		}
-//	}
+	@RequestMapping(value="terminalVal")
+	public void terminalValidate(String account, String password, 
+			HttpServletResponse response) {
+		String msg = "";
+		if("".equals(account) || "".equals(password)) {
+			msg = "0,账号或密码不能为空";
+		}
+		else {
+			Terminal terminal = loginService.queryByAccountPassword(account, password);
+			if(terminal != null) {
+				msg = "1,验证成功";
+			}
+			else {
+				msg = "0,账号不存在或密码错误";
+			}
+		}
+		
+		// 清空response
+        response.reset();
+        response.setContentType("application/octet-stream");
+        try {
+			response.setHeader("Content-Disposition", "attachment;msg=" + new String(msg.getBytes("UTF-8"),"ISO-8859-1"));
+        	//response.setHeader("Content-Disposition", "attachment;msg=" + new String(msg.getBytes("UTF-8"),"UTF-8"));
+        	//response.setHeader("Content-Disposition", "attachment;msg=" + new String(msg));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 	@RequestMapping(value="loginIn")
 	@ResponseBody

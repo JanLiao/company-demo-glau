@@ -24,7 +24,7 @@ public class PersonDtoUtil {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 		if(flag == 1) {
 			dto.setTid(rResult.getTid());
-			dto.setUid(rResult.getImgName().split("_")[1]);
+			//dto.setUid(rResult.getImgName().split("_")[1]);
 			dto.setAmdRisk("无 | " + rResult.getAmdRisk() + "%");
 			dto.setCdr("无 | " + rResult.getCdr());
 			dto.setDrRisk("无 | " + rResult.getDrRisk() + "%");
@@ -37,7 +37,7 @@ public class PersonDtoUtil {
 			dto.setQulity("无 | " + rResult.getQulity());
 		}else if(flag == 0) {
 			dto.setTid(lResult.getTid());
-			dto.setUid(lResult.getImgName().split("_")[1]);
+			//dto.setUid(lResult.getImgName().split("_")[1]);
 			dto.setAmdRisk(lResult.getAmdRisk() + "%" + " | " + rResult.getAmdRisk() + "%");
 			dto.setCdr(lResult.getCdr() + " | " + rResult.getCdr());
 			dto.setDrRisk(lResult.getDrRisk() + "%" + " | " + rResult.getDrRisk() + "%");
@@ -50,7 +50,7 @@ public class PersonDtoUtil {
 			dto.setQulity(lResult.getQulity() + " | " + rResult.getQulity());
 		}else if(flag == 2) {
 			dto.setTid(lResult.getTid());
-			dto.setUid(lResult.getImgName().split("_")[1]);
+			//dto.setUid(lResult.getImgName().split("_")[1]);
 			dto.setAmdRisk(lResult.getAmdRisk() + "%" + " | 无");
 			dto.setCdr(lResult.getCdr() + " | 无");
 			dto.setDrRisk(lResult.getDrRisk() + "%" + " | 无");

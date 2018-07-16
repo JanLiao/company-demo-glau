@@ -94,7 +94,13 @@ public class PatientServiceImpl implements PatientService {
 //				}
 				Set<String> set1 = new HashSet<String>();
 				for(ImageResult img : list) {
-					String uid = img.getImgName().split("_")[1];
+					String uid = "";
+					if(img.getImgName().split("_").length == 1) {
+						String imgid = img.getImgId();
+						uid = imgDao.getUidByImageId(imgid);
+					}else {
+						uid = img.getImgName().split("_")[1];
+					}
 //					if(!checkSet(img.getTid().trim() + "," + uid.trim(), set)) {
 //						set.add(img.getTid().trim() + "," + uid.trim());
 //					}
@@ -134,6 +140,7 @@ public class PatientServiceImpl implements PatientService {
 						PersonDto dto = PersonDtoUtil.processPerson(lResult, rResult);
 						dto.setSex(p.getSex());
 						dto.setPid(p.getPid());
+						dto.setUid(p.getUid());
 						dto.setPdfUrl(p.getLrpdf());
 						personList.add(dto);
 					}
@@ -159,6 +166,7 @@ public class PatientServiceImpl implements PatientService {
 						PersonDto dto = PersonDtoUtil.processPerson(lResult, rResult);
 						dto.setSex(p.getSex());
 						dto.setPid(p.getPid());
+						dto.setUid(p.getUid());
 						dto.setPdfUrl(p.getLrpdf());
 						personList.add(dto);
 					}
@@ -176,7 +184,13 @@ public class PatientServiceImpl implements PatientService {
 				List<String> set = new ArrayList<String>();
 				Set<String> set1 = new HashSet<String>();
 				for(ImageResult img : list) {
-					String uid = img.getImgName().split("_")[1];
+					String uid = "";
+					if(img.getImgName().split("_").length == 1) {
+						String imgid = img.getImgId();
+						uid = imgDao.getUidByImageId(imgid);
+					}else {
+						uid = img.getImgName().split("_")[1];
+					}
 					set1.add(img.getTid().trim() + "," + uid.trim());
 					//if(!checkSet(img.getTid().trim() + "," + uid.trim(), set)) {
 						//set.add(img.getTid().trim() + "," + uid.trim());
@@ -211,6 +225,7 @@ public class PatientServiceImpl implements PatientService {
 						PersonDto dto = PersonDtoUtil.processPerson(lResult, rResult);
 						dto.setSex(p.getSex());
 						dto.setPid(p.getPid());
+						dto.setUid(p.getUid());
 						dto.setPdfUrl(p.getLrpdf());
 						personList.add(dto);
 					}
@@ -236,6 +251,7 @@ public class PatientServiceImpl implements PatientService {
 						PersonDto dto = PersonDtoUtil.processPerson(lResult, rResult);
 						dto.setSex(p.getSex());
 						dto.setPid(p.getPid());
+						dto.setUid(p.getUid());
 						dto.setPdfUrl(p.getLrpdf());
 						personList.add(dto);
 					}
@@ -334,7 +350,13 @@ public class PatientServiceImpl implements PatientService {
 		info.setE_result1("../" + img.getFullPath());
 		info.setE_result2("../" + img.getCupPath());
 		info.setE_url("../" + img.getImgUrl());
-		info.setEid(img.getImgName().split("_")[1]);
+		String[] str = img.getImgName().split("_");
+		if(str.length == 1) {
+			String uid = imgDao.getUidByImageId(img.getImgId());
+			info.setEid(uid);
+		}else {
+			info.setEid(img.getImgName().split("_")[1]);
+		}
 		info.setFullconf(img.getOd());
 		info.setPercent1("" + img.getGlaucomaRisk() + "%");
 		info.setPercent2("" + img.getAmdRisk() + "%");
@@ -391,7 +413,7 @@ public class PatientServiceImpl implements PatientService {
 					hql = hql + "from " + className + " where ";
 				}
 				
-				//param是否含有风险risk
+				//param是否含有风险risk  该处要改  for循环内用StringBuffer或StringBuilder拼接,不要String拼接
 				if(riskflag == 1) {
 					for(int i = 0; i < len; i++) {
 						if("risk".equals(str[3 * i])) {
@@ -446,9 +468,16 @@ public class PatientServiceImpl implements PatientService {
 			return "";
 		}else {
 			String[] str = imgName.split("_");
-			String tiduid = tid.trim() + "," + str[1].trim();
-			Person p = imgDao.queryByTidUid(tiduid);
-			return p.getPid();
+			if(str.length == 1) {
+				String uid = imgDao.queryByTidName(tid, imgName);
+				String tiduid = tid.trim() + "," + uid;
+				Person p = imgDao.queryByTidUid(tiduid);
+				return p.getPid();
+			}else {
+				String tiduid = tid.trim() + "," + str[1].trim();
+				Person p = imgDao.queryByTidUid(tiduid);
+				return p.getPid();
+			}			
 		}
 	}
 

@@ -57,8 +57,8 @@ public class ImageDaoImpl implements ImageDao {
 		String[] num = fileName.split(",");
 		String imgPath = "img/" + num[0] + "/" + path + "/" + num[1];
 		String[] str = num[1].split("_");
-		if(str.length == 1) {  //手持机     num[1] - uid  未确定
-			Image img = new Image(num[1], num[0], num[1], imgPath, 1, new Timestamp(new Date().getTime()));
+		if(str.length == 1) {  //手持机     num[1] - uid  未确定  18-07-05 UID已确定
+			Image img = new Image(num[1], num[0], num[2], imgPath, 1, new Timestamp(new Date().getTime()));
 			logger.info("current session=" + openSession());
 			logger.info("save img=" + img);
 			Session session =openSession();
@@ -473,5 +473,34 @@ public class ImageDaoImpl implements ImageDao {
 		dto.setName("qulity-" + qulity);
 		dto.setValue("" + total);
 		return dto;
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public String getUidByImageId(String imgid) {
+		String hql = "from Image where imgId = ?";
+		Session session = openSession();
+		Query query = session.createQuery(hql)
+				.setParameter(0, imgid);
+		Image img = (Image) query.uniqueResult();
+		if(session != null) {
+			closeSession(session);
+		}
+		return img.getUid();
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public String queryByTidName(String tid, String imgName) {
+		String hql = "from Image where imgName = ? and tid = ?";
+		Session session = openSession();
+		Query query = session.createQuery(hql)
+				.setParameter(0, imgName)
+				.setParameter(1, tid);
+		Image img = (Image) query.uniqueResult();
+		if(session != null) {
+			closeSession(session);
+		}
+		return img.getUid();
 	}
 }

@@ -35,15 +35,33 @@ public class TerminalDaoImpl implements TerminalDao {
         }
     }
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Terminal queryByAccount(String account, String psw) {
 		String hql = "from Terminal where tid = ? and password = ? and deleted = 0";
-		Query query = this.getCurrentSession().createQuery(hql)
+		Session session = openSession();
+		Query query = session.createQuery(hql)
 				.setParameter(0, account)
 				.setParameter(1, psw);
 		Terminal terminal = (Terminal) query.uniqueResult();
+		if(session != null) {
+			closeSession(session);
+		}
 		return terminal;
 	}
-    
-    
+	
+	@SuppressWarnings("rawtypes")
+	@Override
+	public Terminal queryByAccountPassword(String account, String psw) {
+		String hql = "from Terminal where tid = ? and password = ? and deleted = 0";
+		Session session = openSession();
+		Query query = openSession().createQuery(hql)
+				.setParameter(0, account)
+				.setParameter(1, psw);
+		Terminal terminal = (Terminal) query.uniqueResult();
+		if(session != null) {
+			closeSession(session);
+		}
+		return terminal;
+	}
 }

@@ -33,18 +33,18 @@
 			<scope>test</scope>
 		</dependency>
 
-	   <dependency>
+	   <!-- <dependency>
 		   <groupId>net.sourceforge.tess4j</groupId>
 		   <artifactId>tess4j</artifactId>
 		   <version>4.0.2</version>
 	   </dependency>
 	   
-	   <!-- https://mvnrepository.com/artifact/net.java.dev.jna/jna -->
+	   https://mvnrepository.com/artifact/net.java.dev.jna/jna
        <dependency>
            <groupId>net.java.dev.jna</groupId>
            <artifactId>jna</artifactId>
            <version>4.5.1</version>
-       </dependency>
+       </dependency> -->
 
 		<!-- spring -->
 		<dependency>

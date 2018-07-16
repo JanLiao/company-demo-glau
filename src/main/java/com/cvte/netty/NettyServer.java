@@ -118,7 +118,7 @@ public class NettyServer implements ServletContextListener {  //用于tomcat启�
                 @Override
                 public void initChannel(SocketChannel ch) throws Exception {
                     ChannelPipeline p = ch.pipeline();
-                    p.addLast(new IdleStateHandler(65, 0, 0, TimeUnit.SECONDS));  //连接上来 的客户端10秒内，没有响应就检查是否是空连接 
+                    p.addLast(new IdleStateHandler(65, 0, 0, TimeUnit.SECONDS));  //连接上来 的客户端65秒内，没有响应就检查是否是空连接 
                     p.addLast(idleStateTrigger);  
                     
                     p.addLast(

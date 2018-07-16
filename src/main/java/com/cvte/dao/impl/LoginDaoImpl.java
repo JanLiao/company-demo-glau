@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.cvte.entity.Resource;
 import com.cvte.entity.Role;
+import com.cvte.entity.Terminal;
 import com.cvte.entity.User;
 
 /** 
@@ -82,6 +83,17 @@ private Logger logger = Logger.getLogger(UserDaoImpl.class);
 		Session session = openSession();
 		session.save(user);
 		closeSession(session);
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public Terminal queryByAccountPassword(String account, String password) {
+		String hql = "from Terminal where tid = ? and password = ? and deleted = 0";
+		Query query = this.getCurrentSession().createQuery(hql)
+				.setParameter(0, account)
+				.setParameter(1, password);
+		Terminal terminal = (Terminal) query.uniqueResult();
+		return terminal;
 	}
 	
 }

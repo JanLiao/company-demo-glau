@@ -10,4 +10,6 @@ public interface TerminalDao {
 
 	Terminal queryByAccount(String account, String psw);
 
+	Terminal queryByAccountPassword(String account, String password);
+
 }

@@ -52,8 +52,8 @@ public class HandlerUtil {
 			}
 			else {  //"OS"
 				st = "L";
-			}   //uid未确定  num[1]
-			ImgInfo img = new ImgInfo(num[1], num[0], st, info.getE_url(), 
+			}   //uid未确定  num[1]   18-07-03 UID已经确定num[2]
+			ImgInfo img = new ImgInfo(num[2], num[0], st, info.getE_url(), 
 					info.getE_result1(), info.getFullconf(), 
 					info.getCupconf(), info.getCdr(), info.getE_result2(), 
 					"" + info.getQulity(), info.getPercent2(), info.getPercent3(),
@@ -125,10 +125,10 @@ public class HandlerUtil {
 		EyeInfo info = new EyeInfo();
 		String[] num = filename.split(",");
 		String[] str = num[1].split("_");
-		logger.info("UID=" + str[1]);
+		logger.info("UID=" + num[2]);
 		//info.setFlag(flag);
-		System.out.println("uid=" + str[1]);
-		info.setEid(str[1]);
+		System.out.println("uid=" + num[2]);
+		info.setEid(num[2]);
 		info.setE_url("img/" + num[0] + "/" + datepath + "/" + num[1]);
 		List<String> list = Constant.ResultList;
 		logger.info("list size=" + list.size());
