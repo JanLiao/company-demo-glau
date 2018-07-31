@@ -39,36 +39,37 @@ public class TCPServerCDR {
         		logger.info("CDR已连接!!!");
         	}
         	//sendMessage();
-            while(started) {
-            	//dataInputStream = new DataInputStream(socket.getInputStream());    
-            	//String message = GetMessageFromClient();  
-            	
-            	InputStream in = socket.getInputStream();  
-                byte[] buf = new byte[1024*256];  
-                //注意：read会产生阻塞  
-                int len = in.read(buf);  
-                String message = new String(buf, 0, len);
-                System.out.println("CDR=" + new String(buf,0,len)); 
-                if(!"zxcv".equals(message)) {      
-                	Constant.ResultList.add(message);
-                	System.out.println("cru size=" + Constant.ResultList.size());
-                }
-            	//sendMessage();
-                if(!"".equals(message)) {
-                	System.out.println("CDR message is not null!");
-                }
-            }
+//            while(started) {
+//            	//dataInputStream = new DataInputStream(socket.getInputStream());    
+//            	//String message = GetMessageFromClient();  
+//            	
+//            	InputStream in = socket.getInputStream();  
+//                byte[] buf = new byte[1024*256];  
+//                //注意：read会产生阻塞  
+//                int len = in.read(buf);  
+//                String message = new String(buf, 0, len);
+//                System.out.println("CDR=" + new String(buf,0,len)); 
+//                if(!"zxcv".equals(message)) {      
+//                	Constant.ResultList.add(message);
+//                	System.out.println("cru size=" + Constant.ResultList.size());
+//                }
+//            	//sendMessage();
+//                if(!"".equals(message)) {
+//                	System.out.println("CDR message is not null!");
+//                }
+//            }
         } catch (IOException e) {    
             e.printStackTrace();    
-        }finally{  
-            if(socket!=null){  
-                try{  
-                    socket.close();  
-                }catch(IOException e) {   
-                    e.printStackTrace();   
-                }  
-            }  
-        }  
+        }
+//        finally{  
+//            if(socket!=null){  
+//                try{  
+//                    socket.close();  
+//                }catch(IOException e) {   
+//                    e.printStackTrace();   
+//                }  
+//            }  
+//        } 
           
     }    
     

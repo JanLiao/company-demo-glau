@@ -186,6 +186,7 @@ public class ImageDaoImpl implements ImageDao {
 	@SuppressWarnings("rawtypes")
 	@Override
 	public Person queryByTidUid(String tidU) {
+		//System.out.println("tidU = " + tidU);
 		String[] str = tidU.split(",");
 		String hql = "from Person where tid=? and uid=?";
 		Query query = this.getCurrentSession().createQuery(hql);

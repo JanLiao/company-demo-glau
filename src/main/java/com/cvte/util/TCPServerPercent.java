@@ -39,41 +39,36 @@ public class TCPServerPercent {
         		logger.info("percent已连接!!!");
         	}
         	//sendMessage();
-            while(started) {
-            	//dataInputStream = new DataInputStream(socket.getInputStream());    
-            	//String message = GetMessageFromClient();  
-            	
-            	InputStream in = socket.getInputStream();  
-                byte[] buf = new byte[1024*256];  
-                //注意：read会产生阻塞  
-                int len = in.read(buf);  
-                String message = new String(buf, 0, len);
-                System.out.println("percent=" + new String(buf,0,len)); 
-                Constant.ResultList.add(message);
-//            	try {
-//					Thread.sleep(10000);
-//				} catch (InterruptedException e) {
-//					e.printStackTrace();
-//				}
-//            	System.out.println("时间到!!");
-            	//sendMessage();
-                if(!"".equals(message)) {
-                	System.out.println("percent message is not null!");
-                	//sendMessage();
-                	//break;
-                }
-            }
+//            while(started) {
+//            	//dataInputStream = new DataInputStream(socket.getInputStream());    
+//            	//String message = GetMessageFromClient();  
+//            	
+//            	InputStream in = socket.getInputStream();  
+//                byte[] buf = new byte[1024*256];  
+//                //注意：read会产生阻塞  
+//                int len = in.read(buf);  
+//                String message = new String(buf, 0, len);
+//                System.out.println("percent=" + new String(buf,0,len)); 
+//                Constant.ResultList.add(message);
+//            	//sendMessage();
+//                if(!"".equals(message)) {
+//                	System.out.println("percent message is not null!");
+//                	//sendMessage();
+//                	//break;
+//                }
+//            }
         } catch (IOException e) {    
             e.printStackTrace();    
-        }finally{  
-            if(socket!=null){  
-                try{  
-                    socket.close();  
-                }catch(IOException e) {   
-                    e.printStackTrace();   
-                }  
-            }  
-        }  
+        }
+//        finally{  
+//            if(socket!=null){  
+//                try{  
+//                    socket.close();  
+//                }catch(IOException e) {   
+//                    e.printStackTrace();   
+//                }  
+//            }  
+//        }
           
     }    
     

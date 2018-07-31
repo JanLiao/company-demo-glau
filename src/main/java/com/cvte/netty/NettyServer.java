@@ -56,26 +56,25 @@ public class NettyServer implements ServletContextListener {  //用于tomcat启�
 	 */
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
-		executor = Executors.newFixedThreadPool(10);
-		executor.submit(new Runnable() {
-
+		myThread = new Thread(new Runnable() {
 			@Override
 			public void run() {
 				startNettyServer();    //启动netty服务器
 			}
-			
 		});
+		myThread.start();
 		
-		executor.submit(new Runnable() {
-			
+		qulityThread = new Thread(new Runnable() {
+
 			@Override
 			public void run() {
-				new TCPServerCDR().startServer();
+				new TCPServer().startServer();
 			}
 			
 		});
+		qulityThread.start();
 		
-		executor.submit(new Runnable() {  //启动percent tcp服务
+		percentThread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
@@ -83,16 +82,55 @@ public class NettyServer implements ServletContextListener {  //用于tomcat启�
 			}
 			
 		});
+		percentThread.start();
 		
-		executor.submit(new Runnable() {  //quality tcp启动
+		cdrThread = new Thread(new Runnable() {
 
 			@Override
 			public void run() {
-				TCPServer tcp = new TCPServer();
-				tcp.startServer();
+				new TCPServerCDR().startServer();
 			}
 			
 		});
+		cdrThread.start();
+		
+//		executor = Executors.newFixedThreadPool(4);
+//		executor.submit(new Runnable() {
+//
+//			@Override
+//			public void run() {
+//				startNettyServer();    //启动netty服务器
+//			}
+//			
+//		});
+//		
+//		executor.submit(new Runnable() {
+//			
+//			@Override
+//			public void run() {
+//				new TCPServerCDR().startServer();
+//			}
+//			
+//		});
+//		
+//		executor.submit(new Runnable() {  //启动percent tcp服务
+//
+//			@Override
+//			public void run() {
+//				new TCPServerPercent().startServer();
+//			}
+//			
+//		});
+//		
+//		executor.submit(new Runnable() {  //quality tcp启动
+//
+//			@Override
+//			public void run() {
+//				TCPServer tcp = new TCPServer();
+//				tcp.startServer();
+//			}
+//			
+//		});
 		
 		Logger logger = Logger.getLogger(NettyServer.class);
 		logger.info("start connection tcp");
@@ -145,13 +183,17 @@ public class NettyServer implements ServletContextListener {  //用于tomcat启�
 	public void contextDestroyed(ServletContextEvent arg0) {   //关闭时回收资源
 		Logger logger = Logger.getLogger(NettyServer.class);
 		
-		try {
-			executor.shutdown();
-			executor.awaitTermination(30, TimeUnit.SECONDS);
-			logger.info("all tcp server thread is interrupt====");
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
+//		try {
+//			executor.shutdown();
+//			executor.awaitTermination(30, TimeUnit.SECONDS);
+//			logger.info("all tcp server thread is interrupt====");
+//		} catch(Exception e) {
+//			e.printStackTrace();
+//		}
+		myThread.interrupt();
+		qulityThread.interrupt();
+		percentThread.interrupt();
+		cdrThread.interrupt();
 	}
 
 }

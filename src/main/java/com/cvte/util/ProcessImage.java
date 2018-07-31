@@ -10,6 +10,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
@@ -106,39 +110,62 @@ public class ProcessImage {
 	
 	private static EyeInfo getData(String filename, String datepath) {
 		Logger logger = Logger.getLogger(ProcessImage.class);
-		
+		List<String> resultList = new ArrayList<String>();
 		if(Constant.SocketList.size() == 3) {
 			int len = Constant.SocketList.size();
 			logger.info("start to send message");
 //			System.out.println("size=" + len);
+			
+			// 开启线程池进行数据交换
+			ExecutorService executor = Executors.newFixedThreadPool(3);
+			Future<String>[] futures = new Future[3];
 			for(int i = 0; i < len; i++) {
 				System.out.println("curr socket=" + Constant.SocketList.get(i));
-				sendMessage(Constant.SocketList.get(i), filename, datepath);
+				ResultTask task = new ResultTask();
+				task.setSocket(Constant.SocketList.get(i));
+				task.setType(i);
+				task.setDatepath(datepath);
+				task.setImgName(filename);
+				futures[i] = executor.submit(task);
+				//sendMessage(Constant.SocketList.get(i), filename, datepath);
 			}
 			logger.info("message is all send!!!");
+			
+			for(int i = 0; i < len; i++) {
+				String tmp = "";
+				try {
+					tmp = futures[i].get();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					e.printStackTrace();
+				}
+				resultList.add(tmp);
+			}
+			executor.shutdown();
 		}
 		
 		//接收到三socket处理的消息
-		while(true) {
-			try {
-				Thread.sleep(10);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			if(Constant.ResultList.size() == 3) {
-				logger.info("result3=" + Constant.ResultList);
-				System.out.println("result3=" + Constant.ResultList);
-				break;
-			}
-		}
+//		while(true) {
+//			try {
+//				Thread.sleep(10);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//			if(Constant.ResultList.size() == 3) {
+//				logger.info("result3=" + Constant.ResultList);
+//				System.out.println("result3=" + Constant.ResultList);
+//				break;
+//			}
+//		}
 		
 		logger.info("result is over===============");
-		EyeInfo info = setData(filename, datepath);
+		EyeInfo info = setData(resultList, filename, datepath);
 		logger.info("info=" + info);
 		return info;
 	}
 	
-	private static EyeInfo setData(String filename, String datepath) {
+	private static EyeInfo setData(List<String> list, String filename, String datepath) {
 		Logger logger = Logger.getLogger(ProcessImage.class);
 		EyeInfo info = new EyeInfo();
 		String[] num = filename.split(",");
@@ -148,7 +175,7 @@ public class ProcessImage {
 		System.out.println("uid=" + str[1]);
 		info.setEid(str[1]);
 		info.setE_url("img/" + num[0] + "/" + datepath + "/" + num[1]);
-		List<String> list = Constant.ResultList;
+		//List<String> list = Constant.ResultList;
 		logger.info("list size=" + list.size());
 		for(String s : list) {
 			logger.info("string=" + s);

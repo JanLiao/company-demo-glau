@@ -40,34 +40,35 @@ public class TCPServer {
         		System.out.println("qulity已连接!!!");
         	}
         	//sendMessage();
-            while(started) {
-            	//dataInputStream = new DataInputStream(socket.getInputStream());    
-            	//String message = GetMessageFromClient();  
-            	
-            	InputStream in = socket.getInputStream();
-                byte[] buf = new byte[1024*256];
-                //注意：read会产生阻塞  
-                int len = in.read(buf);
-                String message = new String(buf, 0, len);
-                System.out.println("qulity=" + new String(buf,0,len)); 
-                Constant.ResultList.add(message);
-                if(!"".equals(message)) {
-                	System.out.println("quality message is not null!");
-                }
-            }
+//            while(started) {
+//            	//dataInputStream = new DataInputStream(socket.getInputStream());    
+//            	//String message = GetMessageFromClient();  
+//            	
+//            	InputStream in = socket.getInputStream();
+//                byte[] buf = new byte[1024*256];
+//                //注意：read会产生阻塞  
+//                int len = in.read(buf);
+//                String message = new String(buf, 0, len);
+//                System.out.println("qulity=" + new String(buf,0,len)); 
+//                Constant.ResultList.add(message);
+//                if(!"".equals(message)) {
+//                	System.out.println("quality message is not null!");
+//                }
+//            }
         } catch (IOException e) {
             e.printStackTrace();
-        }finally{
-        	logger.info("qulity tcp close=============");
-        	//sendMessage(1);
-            if(socket!=null){
-                try{
-                    socket.close();
-                }catch(IOException e) {
-                    e.printStackTrace();
-                }
-            }  
-        }  
+        }
+//        finally{
+//        	logger.info("qulity tcp close=============");
+//        	//sendMessage(1);
+//            if(socket!=null){
+//                try{
+//                    socket.close();
+//                }catch(IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }  
+//        }
           
     }    
     
