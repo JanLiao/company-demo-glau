@@ -1,0 +1,63 @@
+.jan-content{
+	position: absolute;
+	left:5%;
+	top:3%;
+	width:90%;
+	height:94%;
+	border:2px solid darkslategray;
+	border-radius:30px;
+}
+.jan-head{
+	position: absolute;
+	left:10%;
+	top:5%;
+	width:80%;
+	height:4%;
+	font-size:25px;
+	font-weight:bold;
+}
+.jan-id{
+	position: absolute;
+	left:10%;
+	top:10%;
+	width:80%;
+	height:4%;
+	font-size:20px;
+	font-weight:bold;
+}
+.jan-hr{
+	position: absolute;
+	left:10%;
+	top:15%;
+	width:80%;
+}
+.jan-left-num{
+	position: absolute;
+	left:10%;
+	top:18%;
+	width:30%;
+	height:40%;
+}
+.jan-ware{
+	position: absolute;
+	left:40%;
+	top:18%;
+	background:url(1.png) no-repeat 10px center;
+	width:60%;
+	height:40%;
+}
+.jan-left-notify{
+	position: absolute;
+	left:10%;
+	top:59%;
+	width:30%;
+	height:35%;
+}
+.jan-report{
+	position: absolute;
+	left:40%;
+	top:59%;
+	background:url(2.png) no-repeat 10px center;
+	width:60%;
+	height:35%;
+}
