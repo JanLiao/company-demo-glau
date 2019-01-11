@@ -43,15 +43,21 @@
   
   
   
-<!--     <bean id="multipartResolver" class="org.south.itms.util.UploadCommonsMultipartResolver">
+    <!-- <bean id="multipartResolver" class="org.south.itms.util.UploadCommonsMultipartResolver">
        <property name="defaultEncoding" value="utf-8" />
        <property name="maxUploadSize" value="50000000000" />
        <property name="maxInMemorySize" value="4096"/>
        <property name="uploadTempDir" value="tmp" />
     </bean> -->
     
-    <mvc:interceptors>  
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" 
+    p:defaultEncoding="UTF-8" 
+    p:resolveLazily="true" 
+    p:maxUploadSize="52428800" 
+    p:uploadTempDir="upload/temp"/>
+    
    <!--  使用bean定义一个Interceptor，直接定义在mvc:interceptors根下面的Interceptor将拦截所有的请求   -->
+    <mvc:interceptors>  
     <mvc:interceptor>  
         <!-- 进行拦截：/**表示拦截所有controller -->
         <mvc:mapping path="/**" />

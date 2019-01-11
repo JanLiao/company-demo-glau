@@ -31,6 +31,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.cvte.dao.impl.ImageDao;
@@ -212,6 +213,90 @@ public class GlaucomaController {
         logger.info(pid + "=" + pdfUrl);
         System.out.println("filename=" + str[str.length - 1]);
 		InputStream in = new FileInputStream(new File(p.getLrpdf()));// 将该文件加入到输入流之中
+		byte[] body = null;
+		body = new byte[in.available()];// 返回下一次对此输入流调用的方法可以不受阻塞地从此输入流读取（或跳过）的估计剩余字节数
+		in.read(body);// 读入到输入流里面
+		String fileName = new String(str[str.length - 1].getBytes("gbk"), "iso8859-1");// 防止中文乱码
+		HttpHeaders headers = new HttpHeaders();// 设置响应头
+		headers.add("Content-Disposition", "attachment;filename=" + fileName);
+		//headers.setContentDispositionFormData("attachment", fileName);
+		headers.setContentType((MediaType.parseMediaType("application/pdf")));
+		HttpStatus statusCode = HttpStatus.OK;// 设置响应吗
+		ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(body, headers, statusCode);
+		return response;
+	}
+	
+	@RequestMapping("/downloadOnly")
+	public ResponseEntity<byte[]> uploadImgDownloadPDF(HttpServletRequest request) throws IOException {
+		String pdfUrl = "F:/eclipse-workspace-new1/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/"
+				+ "Glaucoma/csvReport/086_20180403230525LR.pdf";
+		//下载文件路径
+        System.out.println("=pdfUrl=" + pdfUrl);
+        //String[] str = pdfUrl.split("/");
+        
+        String[] str = pdfUrl.split("/");
+        System.out.println("filename=" + str[str.length - 1]);
+		InputStream in = new FileInputStream(new File(pdfUrl));// 将该文件加入到输入流之中
+		byte[] body = null;
+		body = new byte[in.available()];// 返回下一次对此输入流调用的方法可以不受阻塞地从此输入流读取（或跳过）的估计剩余字节数
+		in.read(body);// 读入到输入流里面
+		String fileName = new String(str[str.length - 1].getBytes("gbk"), "iso8859-1");// 防止中文乱码
+		HttpHeaders headers = new HttpHeaders();// 设置响应头
+		headers.add("Content-Disposition", "attachment;filename=" + fileName);
+		//headers.setContentDispositionFormData("attachment", fileName);
+		headers.setContentType((MediaType.parseMediaType("application/pdf")));
+		HttpStatus statusCode = HttpStatus.OK;// 设置响应吗
+		ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(body, headers, statusCode);
+		return response;
+	}
+	
+	@RequestMapping("/uploadOnly")
+	public void uploadOnly( @RequestParam("file") MultipartFile file, HttpServletRequest request) throws IOException {
+		System.out.println("name = " + file.getOriginalFilename());
+		if (!file.isEmpty()) {
+			try {
+				// 文件存放服务端的位置
+				String rootPath = "D:/tmpPDF";
+				File dir = new File(rootPath + File.separator);
+				if (!dir.exists())
+					dir.mkdirs();
+				// 写文件到服务器
+				File serverFile = new File(dir.getAbsolutePath() + File.separator + file.getOriginalFilename());
+				file.transferTo(serverFile);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	@RequestMapping("/uploadImgDownloadPDF")
+	public ResponseEntity<byte[]> uploadImgDownloadPDF( @RequestParam("file") MultipartFile file, HttpServletRequest request) throws IOException {
+		System.out.println("name = " + file.getOriginalFilename());
+		if (!file.isEmpty()) {
+			try {
+				// 文件存放服务端的位置
+				String rootPath = "D:/tmpPDF";
+				File dir = new File(rootPath + File.separator);
+				if (!dir.exists())
+					dir.mkdirs();
+				// 写文件到服务器
+				File serverFile = new File(dir.getAbsolutePath() + File.separator + file.getOriginalFilename());
+				file.transferTo(serverFile);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		String pdfUrl = "F:/eclipse-workspace-new1/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/"
+				+ "Glaucoma/csvReport/086_20180403230525LR.pdf";
+		//下载文件路径
+        System.out.println("=pdfUrl=" + pdfUrl);
+        //String[] str = pdfUrl.split("/");
+        
+        String[] str = pdfUrl.split("/");
+        System.out.println("filename=" + str[str.length - 1]);
+		InputStream in = new FileInputStream(new File(pdfUrl));// 将该文件加入到输入流之中
 		byte[] body = null;
 		body = new byte[in.available()];// 返回下一次对此输入流调用的方法可以不受阻塞地从此输入流读取（或跳过）的估计剩余字节数
 		in.read(body);// 读入到输入流里面

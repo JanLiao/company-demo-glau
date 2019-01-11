@@ -2,6 +2,10 @@ package com.cvte.netty.msg;
 
 public class PDFRecMsg  extends BaseMsg {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4065926301140200756L;
 	private String pdfname;
 
 	public PDFRecMsg(String pdfname) {

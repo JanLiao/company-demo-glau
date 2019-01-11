@@ -38,7 +38,7 @@ public class TCPServerPercent {
         		System.out.println("percent已连接!!!");
         		logger.info("percent已连接!!!");
         	}
-        	//sendMessage();
+//        	sendMessage();
 //            while(started) {
 //            	//dataInputStream = new DataInputStream(socket.getInputStream());    
 //            	//String message = GetMessageFromClient();  
@@ -83,7 +83,8 @@ public class TCPServerPercent {
 		}
 		PrintWriter pw = new PrintWriter(os);
 		System.out.println("send end!");
-		pw.println("/home/intern1/janliao/imgpath/u13_p13_2018_L_CON_1.jpg");
+		//pw.println("/home/intern1/janliao/imgpath/u13_p13_2018_L_CON_1.jpg");
+		pw.println("/home/intern1/janliao/web/tomcat/webapps/Glaucoma/appImg/jan/jan_L_1534322924140.JPG");
 		pw.flush();
     }
         

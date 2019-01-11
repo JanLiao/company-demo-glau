@@ -377,6 +377,10 @@ public class SaveToCSV {
 			logger.info("transfer end====");
 			//保存到数据库Person
 			imgDao.savePerson(person, img.getLr(), pdfPath, flag);
+			
+			// 同时保存report  推送到APP端
+			logger.info("开始传输PC report");
+			imgDao.saveReport(person, img.getLr(), flag);
 		}else {
 			logger.info("pdfF is not exist========");
 		}

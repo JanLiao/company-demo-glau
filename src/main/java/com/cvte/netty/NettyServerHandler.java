@@ -52,7 +52,7 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<BaseMsg> {
 				InetSocketAddress insocket = (InetSocketAddress) ctx.channel()
 						.remoteAddress();
 				String clientIP = insocket.getAddress().getHostAddress();
-				//logger.info(clientIP + "  =  " + form.format(new java.util.Date()) + "=server println Heartbeat");
+				logger.info(clientIP + "  =  " + form.format(new java.util.Date()) + "=server println Heartbeat");
 				break;
 				
 			case PDFRec: //收到PC端已接收到PDF文件  传输日志保存信息
@@ -85,14 +85,17 @@ public class NettyServerHandler extends SimpleChannelInboundHandler<BaseMsg> {
 				break;
 	
 			case Validate: // 客户端请求连接服务器
+				System.out.println("msg = " + msg);
 				ValidateMsg validateMsg = (ValidateMsg) msg;
 				String account = validateMsg.getAccount();
 				String psw = validateMsg.getPassword();
+				logger.info("account=" + account + "=" + psw);
 				Terminal terminal = terminalDao.queryByAccount(account, psw);
 				if (terminal != null) {
 					System.out.println("连接验证成功!!!!!");
 					logger.info("验证成功");
 					NettyChannelMap.add(account, (SocketChannel)ctx.channel());
+					logger.info(account + " 添加成功");
 					//通知客户端, 验证成功
 					ResultMsg resultMsg = new ResultMsg(true, MsgType.Validate);
 					ctx.writeAndFlush(resultMsg);	

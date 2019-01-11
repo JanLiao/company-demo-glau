@@ -68,16 +68,19 @@ public class VisitDaoImpl implements VisitDao {
 				}
 				java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 				if(Integer.parseInt(sex) == 2) {
-					String hql = "select count(1) from Person where tid = " + tid
+					//System.out.println("tid = " + tid);
+					String hql = "select count(1) from Person where tid = ?"
 							 + " and pdfTime = ? ";
 					Query query = this.getCurrentSession().createQuery(hql);
-					query.setParameter(0, sqlDate);
+					query.setParameter(0, tid);
+					query.setParameter(1, utilDate);
+					//System.out.println("num = " + query.uniqueResult());
 					data.add(Integer.parseInt("" + query.uniqueResult()));
 //					String totalHql = "select count(1) from Person where tid = " + tid;
 //					total = Integer.parseInt("" + this.getCurrentSession().createQuery(totalHql).uniqueResult());
 				}else if(Integer.parseInt(sex) == 1) {
-					String hql = "select count(1) from Person where tid = " + tid
-							 + " and sex = " + "'女'" + " and pdfTime = ? ";
+					String hql = "select count(1) from Person where tid = '" + tid
+							 + "' and sex = " + "'女'" + " and pdfTime = ? ";
 					Query query = this.getCurrentSession().createQuery(hql);
 					query.setParameter(0, sqlDate);
 					data.add(Integer.parseInt("" + query.uniqueResult()));
@@ -86,8 +89,8 @@ public class VisitDaoImpl implements VisitDao {
 //					total = Integer.parseInt("" + this.getCurrentSession().createQuery(totalHql).uniqueResult());
 					
 				}else if(Integer.parseInt(sex) == 0) {
-					String hql = "select count(1) from Person where tid = " + tid
-							 + " and sex = " + "'男'" + " and pdfTime = ? ";
+					String hql = "select count(1) from Person where tid = '" + tid
+							 + "' and sex = " + "'男'" + " and pdfTime = ? ";
 					Query query = this.getCurrentSession().createQuery(hql);
 					query.setParameter(0, sqlDate);
 					data.add(Integer.parseInt("" + query.uniqueResult()));
@@ -119,16 +122,16 @@ public class VisitDaoImpl implements VisitDao {
 					}
 					java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
 					if(Integer.parseInt(sex) == 2) {
-						String hql = "select count(1) from Person where tid = " + tid
-								 + " and pdfTime = ? ";
+						String hql = "select count(1) from Person where tid = '" + tid
+								 + "' and pdfTime = ? ";
 						Query query = this.getCurrentSession().createQuery(hql);
 						query.setParameter(0, sqlDate);
 						data.add(Integer.parseInt("" + query.uniqueResult()));
 //						String totalHql = "select count(1) from Person where tid = " + tid;
 //						total = Integer.parseInt("" + this.getCurrentSession().createQuery(totalHql).uniqueResult());
 					}else if(Integer.parseInt(sex) == 1) {
-						String hql = "select count(1) from Person where tid = " + tid
-								 + " and sex = " + "'女'" + " and pdfTime = ? ";
+						String hql = "select count(1) from Person where tid = '" + tid
+								 + "' and sex = " + "'女'" + " and pdfTime = ? ";
 						Query query = this.getCurrentSession().createQuery(hql);
 						query.setParameter(0, sqlDate);
 						data.add(Integer.parseInt("" + query.uniqueResult()));
@@ -137,8 +140,8 @@ public class VisitDaoImpl implements VisitDao {
 //						total = Integer.parseInt("" + this.getCurrentSession().createQuery(totalHql).uniqueResult());
 						
 					}else if(Integer.parseInt(sex) == 0) {
-						String hql = "select count(1) from Person where tid = " + tid
-								 + " and sex = " + "'男'" + " and pdfTime = ? ";
+						String hql = "select count(1) from Person where tid = '" + tid
+								 + "' and sex = " + "'男'" + " and pdfTime = ? ";
 						Query query = this.getCurrentSession().createQuery(hql);
 						query.setParameter(0, sqlDate);
 						data.add(Integer.parseInt("" + query.uniqueResult()));
@@ -154,7 +157,7 @@ public class VisitDaoImpl implements VisitDao {
 			}
 			
 		}
-		String totalHql = "select count(1) from Person where tid = " + tid;
+		String totalHql = "select count(1) from Person where tid = '" + tid + "'";
 		int total = Integer.parseInt("" + this.getCurrentSession().createQuery(totalHql).uniqueResult());
 		dto.setName(tid);
 		dto.setData(data);

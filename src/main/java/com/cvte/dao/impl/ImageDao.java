@@ -45,4 +45,6 @@ public interface ImageDao {
 
 	String queryByTidName(String tid, String imgName);
 
+	void saveReport(Person person, String lr, int flag);
+
 }

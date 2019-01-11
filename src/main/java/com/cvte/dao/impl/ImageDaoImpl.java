@@ -17,12 +17,17 @@ import org.springframework.stereotype.Repository;
 
 import com.cvte.cons.Constant;
 import com.cvte.dto.QulityDto;
+import com.cvte.entity.Appoint;
 import com.cvte.entity.Image;
 import com.cvte.entity.ImageResult;
+import com.cvte.entity.Message;
 import com.cvte.entity.Person;
+import com.cvte.entity.Report;
 import com.cvte.entity.RiskDto;
+import com.cvte.entity.Terminal;
 import com.cvte.msg.Result;
 import com.cvte.netty.msg.ImgInfo;
+import com.cvte.util.SendMessageUtil;
 
 /** 
 * @author: jan 
@@ -101,6 +106,115 @@ public class ImageDaoImpl implements ImageDao {
 		Session session = openSession();
 		session.save(imgResult);
 		closeSession(session);
+	}
+	
+	public Appoint getAppointByUid(String uid) {
+		Session session = openSession();
+		String hql = "from Appoint where appointNum=?";
+		Query query = session.createQuery(hql);
+		query.setParameter(0, uid);
+		Appoint appoint = (Appoint) query.uniqueResult();
+		closeSession(session);
+		return appoint;
+	}
+	
+	public void saveMessage(int id) {
+		// 生成消息对象
+		Message message = new Message();
+		message.setAccountId(id);
+		message.setGenerateTime(new Date());
+		message.setIconUrl("pic/shiyuan.jpg");
+		message.setMessageId(1);
+		message.setMessageSrc("小源");
+		message.setTitle("有新的报告待查看");
+		message.setType(1);
+		Session session = openSession();
+		session.save(message);
+		closeSession(session);
+	}
+	
+	public Terminal getTerminalByAccountId(int accountId) {
+		Session session = openSession();
+        try {
+        	String sql = "select a.* from terminal a left join account act on a.terminal_id = act.terminal_id where a.deleted = 0 and act.id = " + accountId;
+        	return session.createNativeQuery(sql, Terminal.class).uniqueResult();
+        } finally {
+            closeSession(session);
+        }
+	}
+	
+	public Report getReportByUid(String uid) {
+		Session session = openSession();
+		String hql = "from Report where appointNum = ?";
+		Query query = session.createQuery(hql);
+		query.setParameter(0, uid);
+		Report report = (Report) query.uniqueResult();
+		closeSession(session);
+		return report;
+	}
+	
+	// 保存APP report
+	@Override
+	public void saveReport(Person person, String lr, int flag) {
+		logger.info("person Appoint uid  = " + person.getUid());
+		Appoint appoint = getAppointByUid(person.getUid());
+		logger.info("appoint = " + appoint);
+		if(appoint != null) {
+			Terminal terminal = getTerminalByAccountId(appoint.getAccountId());
+			logger.info("terminal = " + terminal);
+			Report rpt = getReportByUid(person.getUid());
+			logger.info("report = " + rpt);
+			Session session = openSession();
+			if(rpt == null) {
+				Report report = new Report();
+				report.setAccountId(appoint.getAccountId());
+				if(person.getLid() == null || "".equals(person.getLid())) {
+					System.out.println("空 没有 Lid");
+					logger.info("空 没有 Lid");
+					report.setlImgId(0);
+				}else {
+					report.setlImgId(Integer.parseInt(person.getLid()));
+				}
+				if(person.getRid() == null || "".equals(person.getRid())) {
+					System.out.println("空 没有 Rid");
+					logger.info("空 没有 Rid");
+					report.setrImgId(0);
+				}else {
+					report.setrImgId(Integer.parseInt(person.getRid()));
+				}
+				
+				report.setReportType(Constant.REPORT_TYPE_PC);
+				report.setReportTime(new Date());
+				report.setAppointNum(person.getUid());
+				logger.info("结果 report = " + report);
+				session.save(report);
+			}else {
+				if(person.getLid() == null || "".equals(person.getLid())) {
+					System.out.println("有report  没有 Lid");
+					logger.info("有report 没有 Lid");
+				}else {
+					rpt.setlImgId(Integer.parseInt(person.getLid()));
+				}
+				if(person.getRid() == null || "".equals(person.getRid())) {
+					System.out.println("有report 没有 Rid");
+					logger.info("有report 没有 Rid");
+				}else {
+					rpt.setrImgId(Integer.parseInt(person.getRid()));
+				}
+				logger.info("结果 rpt = " + rpt);
+				Transaction tx = session.beginTransaction(); 
+				session.update(rpt);
+				tx.commit(); 
+			}
+			
+			closeSession(session);
+			
+			logger.info("APP 开始发送消息");
+			// 生成消息对象
+			saveMessage(appoint.getAccountId());
+			// 通知APP消息
+			SendMessageUtil.sendReportMsgToApp(terminal.getTid());
+		}
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -504,4 +618,5 @@ public class ImageDaoImpl implements ImageDao {
 		}
 		return img.getUid();
 	}
+
 }

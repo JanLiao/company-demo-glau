@@ -5,6 +5,10 @@ import java.util.Arrays;
 
 public class TransferMsg extends ResultMsg { //
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7356027563164672455L;
 	private String fileName;
 	private byte[] attachment;
 	

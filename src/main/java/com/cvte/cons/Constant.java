@@ -12,6 +12,9 @@ import com.cvte.entity.EyeInfo;
 public class Constant {
 	
 	//public static String PATH = "C:/Users/CVTE/Desktop/dataset/iSee_multi_dataset";    //遍历数据
+	public static int APPOINT_NUM = 900000;
+	public static final int REPORT_TYPE_APP = 0;
+	public static final int REPORT_TYPE_PC = 1;
 	
 	public static String PATH = "C:/Users/CVTE/Desktop/安装包";    //遍历数据
 	
@@ -79,5 +82,7 @@ public class Constant {
 	public static int NoSex = 2;
 	public static int Man = 0;
 	public static int Woman = 1;
+	
+	public static String TERMINAL = "1000";
 	
 }

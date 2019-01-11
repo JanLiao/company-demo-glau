@@ -108,7 +108,7 @@ public class ProcessImage {
 		
 	}
 	
-	private static EyeInfo getData(String filename, String datepath) {
+	public static EyeInfo getData(String filename, String datepath) {
 		Logger logger = Logger.getLogger(ProcessImage.class);
 		List<String> resultList = new ArrayList<String>();
 		if(Constant.SocketList.size() == 3) {

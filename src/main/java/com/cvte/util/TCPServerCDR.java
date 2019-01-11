@@ -38,7 +38,7 @@ public class TCPServerCDR {
         		System.out.println("CDR已连接!!!");
         		logger.info("CDR已连接!!!");
         	}
-        	//sendMessage();
+//        	sendMessage();
 //            while(started) {
 //            	//dataInputStream = new DataInputStream(socket.getInputStream());    
 //            	//String message = GetMessageFromClient();  
@@ -83,7 +83,7 @@ public class TCPServerCDR {
 		}
 		PrintWriter pw = new PrintWriter(os);
 		System.out.println("send end!");
-		pw.println("/home/intern1/janliao/imgpath/u13_p13_2018_L_CON_1.jpg");
+		pw.println("/home/intern1/janliao/imgpath/u13_p13_2018_R_CON_1.jpg");
 		pw.flush();
     }
         

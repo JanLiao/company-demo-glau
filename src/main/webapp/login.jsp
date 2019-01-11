@@ -49,7 +49,6 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-4 col-md-push-8">
-					
 					<!-- Start Sign In Form -->
 					<div class="fh5co-form animate-box" data-animate-effect="fadeInRight">
 						<h1>登  录</h1>

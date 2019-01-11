@@ -5,6 +5,10 @@ import java.util.Map;
 
 public class RequestMsg extends BaseMsg {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2214413449280908732L;
 	private String terminalId; // 终端的数据库主键
 	private Map<String, Object> param; // 从请求的参数
 
